@@ -1,0 +1,30 @@
+// USUÁRIOS DE TESTE (simulação)
+const usuarios = [
+  { cpf: "11111111111", senha: "aluno123", tipo: "aluno" },
+  { cpf: "22222222222", senha: "admin123", tipo: "admin" }
+];
+
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const cpf = document.getElementById("cpf").value;
+  const senha = document.getElementById("senha").value;
+  const erro = document.getElementById("erro");
+
+  const usuario = usuarios.find(
+    u => u.cpf === cpf && u.senha === senha
+  );
+
+  if (!usuario) {
+    erro.textContent = "CPF ou senha inválidos.";
+    return;
+  }
+
+  localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+
+  if (usuario.tipo === "aluno") {
+    window.location.href = "aluno.html";
+  } else {
+    window.location.href = "admin.html";
+  }
+});
